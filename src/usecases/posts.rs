@@ -1,7 +1,9 @@
 use crate::domains::posts::{Post, PostId, PostRepository};
 use crate::infrastructures::repository::posts::PostRepositoryImpl;
-use diesel::r2d2::{ConnectionManager, PooledConnection};
-use diesel::PgConnection;
+use diesel::{
+    r2d2::{ConnectionManager, Pool},
+    PgConnection,
+};
 use failure::Error;
 
 // use diesel::PgConnection;
@@ -18,11 +20,8 @@ use failure::Error;
 //     repository.insert(post)
 // }
 
-pub fn update_post(
-    post: &Post,
-    conn: PooledConnection<ConnectionManager<PgConnection>>,
-) -> Result<(), Error> {
-    PostRepositoryImpl::update(post, conn)
+pub fn update_post(post: &Post, pool: Pool<ConnectionManager<PgConnection>>) -> Result<(), Error> {
+    PostRepositoryImpl::update(post, pool)
 }
 
 // pub fn delete_post(repository: impl PostRepository, post_id: PostId) -> Result<(), Error> {

@@ -4,7 +4,7 @@ extern crate diesel;
 mod domains;
 mod infrastructures;
 mod server;
-pub mod usecases;
+mod usecases;
 
 fn main() {
     server::run()

@@ -1,7 +1,12 @@
-use super::super::db::schema::*;
 use crate::domains::posts::{Post, PostId, PostRepository};
+use crate::infrastructures::db::schema::*;
+use diesel;
 use diesel::prelude::*;
-use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
+use diesel::QueryDsl;
+use diesel::{
+    r2d2::{ConnectionManager, Pool},
+    PgConnection,
+};
 use failure::Error;
 
 //
@@ -58,54 +63,55 @@ pub struct PostRepositoryImpl {
 }
 
 impl PostRepository for PostRepositoryImpl {
-    // fn find_by_id(&self, post_id: PostId) -> Result<Post, Error> {
-    //     use super::super::db::schema::posts::dsl;
+    fn find_by_id(
+        post_id: PostId,
+        pool: Pool<ConnectionManager<PgConnection>>,
+    ) -> Result<Post, Error> {
+        use super::super::db::schema::posts::dsl;
 
-    //     let conn = self.pool.get()?;
-    //     let entity: PostEntity = dsl::posts
-    //         .filter(posts::id.eq(post_id.get()))
-    //         .get_result(&conn)?;
+        let conn = pool.get()?;
+        let entity: PostEntity = dsl::posts
+            .filter(posts::id.eq(post_id.get()))
+            .get_result(&conn)?;
 
-    //     Ok(entity.of())
-    // }
+        Ok(entity.of())
+    }
 
-    // fn list(&self) -> Result<Vec<Post>, Error> {
-    //     use super::super::db::schema::posts::dsl;
+    fn list(pool: Pool<ConnectionManager<PgConnection>>) -> Result<Vec<Post>, Error> {
+        use super::super::db::schema::posts::dsl;
 
-    //     let query = dsl::posts.into_boxed();
-    //     let conn = self.pool.get()?;
-    //     let results: Vec<PostEntity> = query.limit(100).load(&conn)?;
+        let conn = pool.get()?;
+        let query = dsl::posts.into_boxed();
+        let results: Vec<PostEntity> = query.limit(100).load(&conn)?;
 
-    //     Ok(results.into_iter().map(|e| e.of()).collect())
-    // }
+        Ok(results.into_iter().map(|e| e.of()).collect())
+    }
 
-    // fn insert(&self, Post: &Post) -> Result<(), Error> {
-    //     use super::super::db::schema::posts::dsl;
+    fn insert(Post: &Post, pool: Pool<ConnectionManager<PgConnection>>) -> Result<(), Error> {
+        use super::super::db::schema::posts::dsl;
 
-    //     let entity = NewPostEntity::from(Post);
-    //     let conn = self.pool.get().unwrap();
-    //     diesel::insert_into(dsl::posts)
-    //         .values(entity)
-    //         .execute(&conn)?;
+        let conn = pool.get()?;
+        let entity = NewPostEntity::from(Post);
+        diesel::insert_into(dsl::posts)
+            .values(entity)
+            .execute(&conn)?;
 
-    //     Ok(())
-    // }
+        Ok(())
+    }
 
-    fn update(
-        post: &Post,
-        conn: PooledConnection<ConnectionManager<PgConnection>>,
-    ) -> Result<(), Error> {
+    fn update(post: &Post, pool: Pool<ConnectionManager<PgConnection>>) -> Result<(), Error> {
+        let conn = pool.get()?;
         let entity = PostEntity::from(post);
         diesel::update(posts::table).set(&entity).execute(&conn)?;
 
         Ok(())
     }
 
-    // fn delete(&self, post: &Post) -> Result<(), Error> {
-    //     let entity = PostEntity::from(post);
-    //     let conn = self.pool.get().unwrap();
-    //     diesel::delete(&entity).execute(&conn)?;
+    fn delete(post: &Post, pool: Pool<ConnectionManager<PgConnection>>) -> Result<(), Error> {
+        let conn = pool.get()?;
+        let entity = PostEntity::from(post);
+        diesel::delete(&entity).execute(&conn)?;
 
-    //     Ok(())
-    // }
+        Ok(())
+    }
 }
