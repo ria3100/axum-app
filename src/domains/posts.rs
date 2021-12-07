@@ -1,4 +1,5 @@
 use super::Id;
+use diesel::r2d2::{ConnectionManager, PooledConnection};
 use diesel::PgConnection;
 use failure::Error;
 
@@ -27,6 +28,9 @@ pub trait PostRepository {
     // fn find_by_id(&self, post_id: PostId) -> Result<Post, Error>;
     // fn list(&self) -> Result<Vec<Post>, Error>;
     // fn insert(&self, post: &Post) -> Result<(), Error>;
-    fn update(post: &Post, conn: PgConnection) -> Result<(), Error>;
+    fn update(
+        post: &Post,
+        conn: PooledConnection<ConnectionManager<PgConnection>>,
+    ) -> Result<(), Error>;
     // fn delete(&self, post: &Post) -> Result<(), Error>;
 }

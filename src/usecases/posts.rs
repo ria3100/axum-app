@@ -1,8 +1,10 @@
 use crate::domains::posts::{Post, PostId, PostRepository};
 use crate::infrastructures::repository::posts::PostRepositoryImpl;
+use diesel::r2d2::{ConnectionManager, PooledConnection};
+use diesel::PgConnection;
 use failure::Error;
 
-use diesel::PgConnection;
+// use diesel::PgConnection;
 
 // pub fn get_post_list(repository: impl PostRepository) -> Result<Vec<Post>, Error> {
 //     repository.list()
@@ -16,7 +18,10 @@ use diesel::PgConnection;
 //     repository.insert(post)
 // }
 
-pub fn update_post(post: &Post, conn: PgConnection) -> Result<(), Error> {
+pub fn update_post(
+    post: &Post,
+    conn: PooledConnection<ConnectionManager<PgConnection>>,
+) -> Result<(), Error> {
     PostRepositoryImpl::update(post, conn)
 }
 

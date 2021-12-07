@@ -1,7 +1,7 @@
 use super::super::db::schema::*;
 use crate::domains::posts::{Post, PostId, PostRepository};
 use diesel::prelude::*;
-use diesel::r2d2::{ConnectionManager, Pool};
+use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
 use failure::Error;
 
 //
@@ -91,7 +91,10 @@ impl PostRepository for PostRepositoryImpl {
     //     Ok(())
     // }
 
-    fn update(post: &Post, conn: PgConnection) -> Result<(), Error> {
+    fn update(
+        post: &Post,
+        conn: PooledConnection<ConnectionManager<PgConnection>>,
+    ) -> Result<(), Error> {
         let entity = PostEntity::from(post);
         diesel::update(posts::table).set(&entity).execute(&conn)?;
 
