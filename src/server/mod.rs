@@ -6,8 +6,7 @@ use diesel::r2d2::{ConnectionManager, Pool};
 
 #[tokio::main]
 pub async fn run() {
-    let manager =
-        ConnectionManager::<PgConnection>::new("postgres://docker:docker@127.0.0.1/axum_db");
+    let manager = ConnectionManager::<PgConnection>::new("postgres://docker:docker@127.0.0.1/axum");
     let pool = Pool::builder().build(manager).unwrap();
 
     let app = Router::new()
