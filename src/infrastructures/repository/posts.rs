@@ -63,29 +63,29 @@ pub struct PostRepositoryImpl {
 }
 
 impl PostRepository for PostRepositoryImpl {
-    fn find_by_id(
-        post_id: PostId,
-        pool: Pool<ConnectionManager<PgConnection>>,
-    ) -> Result<Post, Error> {
-        use super::super::db::schema::posts::dsl;
+    // fn find_by_id(
+    //     post_id: PostId,
+    //     pool: Pool<ConnectionManager<PgConnection>>,
+    // ) -> Result<Post, Error> {
+    //     use super::super::db::schema::posts::dsl;
 
-        let conn = pool.get()?;
-        let entity: PostEntity = dsl::posts
-            .filter(posts::id.eq(post_id.get()))
-            .get_result(&conn)?;
+    //     let conn = pool.get()?;
+    //     let entity: PostEntity = dsl::posts
+    //         .filter(posts::id.eq(post_id.get()))
+    //         .get_result(&conn)?;
 
-        Ok(entity.of())
-    }
+    //     Ok(entity.of())
+    // }
 
-    fn list(pool: Pool<ConnectionManager<PgConnection>>) -> Result<Vec<Post>, Error> {
-        use super::super::db::schema::posts::dsl;
+    // fn list(pool: Pool<ConnectionManager<PgConnection>>) -> Result<Vec<Post>, Error> {
+    //     use super::super::db::schema::posts::dsl;
 
-        let conn = pool.get()?;
-        let query = dsl::posts.into_boxed();
-        let results: Vec<PostEntity> = query.limit(100).load(&conn)?;
+    //     let conn = pool.get()?;
+    //     let query = dsl::posts.into_boxed();
+    //     let results: Vec<PostEntity> = query.limit(100).load(&conn)?;
 
-        Ok(results.into_iter().map(|e| e.of()).collect())
-    }
+    //     Ok(results.into_iter().map(|e| e.of()).collect())
+    // }
 
     fn insert(Post: &Post, pool: Pool<ConnectionManager<PgConnection>>) -> Result<(), Error> {
         use super::super::db::schema::posts::dsl;
@@ -107,11 +107,11 @@ impl PostRepository for PostRepositoryImpl {
         Ok(())
     }
 
-    fn delete(post: &Post, pool: Pool<ConnectionManager<PgConnection>>) -> Result<(), Error> {
-        let conn = pool.get()?;
-        let entity = PostEntity::from(post);
-        diesel::delete(&entity).execute(&conn)?;
+    // fn delete(post: &Post, pool: Pool<ConnectionManager<PgConnection>>) -> Result<(), Error> {
+    //     let conn = pool.get()?;
+    //     let entity = PostEntity::from(post);
+    //     diesel::delete(&entity).execute(&conn)?;
 
-        Ok(())
-    }
+    //     Ok(())
+    // }
 }

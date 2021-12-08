@@ -15,7 +15,7 @@ pub async fn get_health() -> &'static str {
 pub async fn login(
     Extension(pool): Extension<Pool<ConnectionManager<PgConnection>>>,
 ) -> &'static str {
-    let post = Post::create(String::from("foo0"), String::from("bar0"));
+    let post = Post::create(String::from("foo1"), String::from("bar1"));
 
     usecases::posts::update_post(&post, pool).unwrap();
 
