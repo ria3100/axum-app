@@ -1,5 +1,7 @@
 mod handlers;
 
+use crate::domains::posts::PostRepository;
+use crate::infrastructures::repository::DBConnectRepositoryImpl;
 use axum::{routing::get, AddExtensionLayer, Router};
 use diesel::{
     r2d2::{ConnectionManager, Pool},
@@ -32,5 +34,11 @@ impl AppContext {
         let pool = Pool::builder().build(manager).unwrap();
 
         AppContext { pool }
+    }
+
+    pub fn posts_repository(&self) -> impl PostRepository {
+        DBConnectRepositoryImpl {
+            pool: Box::new(self.pool.to_owned()),
+        }
     }
 }

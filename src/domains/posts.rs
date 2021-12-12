@@ -1,9 +1,4 @@
 use super::Id;
-use crate::server::AppContext;
-use diesel::{
-    r2d2::{ConnectionManager, Pool},
-    PgConnection,
-};
 use failure::Error;
 
 pub type PostId = Id<Post>;
@@ -13,7 +8,7 @@ pub struct Post {
     pub id: PostId,
     pub title: String,
     pub body: String,
-    // pub published: bool,
+    pub published: bool,
 }
 
 impl Post {
@@ -22,18 +17,15 @@ impl Post {
             id: Default::default(),
             title: title,
             body: body,
-            // published: false,
+            published: false,
         }
     }
 }
 
 pub trait PostRepository {
-    // fn find_by_id(
-    //     post_id: PostId,
-    //     pool: Pool<ConnectionManager<PgConnection>>,
-    // ) -> Result<Post, Error>;
-    // fn list(pool: Pool<ConnectionManager<PgConnection>>) -> Result<Vec<Post>, Error>;
-    fn insert(app_context: AppContext, post: &Post) -> Result<(), Error>;
-    fn update(app_context: AppContext, post: &Post) -> Result<(), Error>;
-    // fn delete(post: &Post, pool: Pool<ConnectionManager<PgConnection>>) -> Result<(), Error>;
+    fn find_by_id(&self, post_id: PostId) -> Result<Post, Error>;
+    fn list(&self) -> Result<Vec<Post>, Error>;
+    fn insert(&self, post: &Post) -> Result<(), Error>;
+    fn update(&self, post: &Post) -> Result<(), Error>;
+    fn delete(&self, post: &Post) -> Result<(), Error>;
 }

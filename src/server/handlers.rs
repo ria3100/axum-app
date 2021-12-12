@@ -8,9 +8,9 @@ pub async fn get_health() -> &'static str {
 }
 
 pub async fn login(Extension(app_context): Extension<AppContext>) -> &'static str {
-    let post = Post::create(String::from("foo1"), String::from("bar1"));
+    let post = Post::create(String::from("foo3"), String::from("bar3"));
 
-    usecases::posts::update_post(app_context, &post).unwrap();
+    usecases::posts::update_post(app_context.posts_repository(), &post).unwrap();
 
     "OK"
 }
