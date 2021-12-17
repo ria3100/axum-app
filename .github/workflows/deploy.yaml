@@ -7,9 +7,9 @@ on:
 
 env:
   GCP_PROJECT: axum-app
-  GCP_REGION: asia-northeast1
+  GCP_REGION: us-central1
   IMAGE: axum-app-web
-  REGISTRY_HOSTNAME: asia.gcr.io
+  REGISTRY_HOSTNAME: gcr.io
   APP_ENV: 'production'
   BUILD_ID: ${{ github.sha }}
 
@@ -57,7 +57,7 @@ jobs:
       - name: Docker Build
         run: |
           docker build \
-            -f Dockerfile \
+            -f ./docker/web/Dockerfile \
             --build-arg BUILD_ID=$BUILD_ID \
             -t $REGISTRY_HOSTNAME/$GCP_PROJECT/$IMAGE:$GITHUB_SHA \
             -t $REGISTRY_HOSTNAME/$GCP_PROJECT/$IMAGE:latest .
@@ -81,7 +81,6 @@ jobs:
           token: '${{ github.token }}'
           state: 'success'
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-          environment_url: 'https://app.ria0130.dev/'
 
       - name: Update Github Deployments Status To Error
         if: failure()
