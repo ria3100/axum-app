@@ -20,12 +20,14 @@ RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 
 COPY --from=deps /app/next.config.js ./
-COPY --from=deps /app/config ./config
+COPY --from=deps /app/src/config ./src/config
 COPY --from=deps /app/public ./public
 COPY --from=deps --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/package.json ./package.json
 
 USER nextjs
+
+EXPOSE 3000
 
 CMD ["node_modules/.bin/next", "start"]

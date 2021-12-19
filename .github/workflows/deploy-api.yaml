@@ -5,6 +5,12 @@ on:
     branches: [ main ]
 
 env:
+  GCP_PROJECT: axum-app
+  GCP_REGION: us-central1
+  IMAGE: axum-app-api
+  REGISTRY_HOSTNAME: gcr.io
+  APP_ENV: 'production'
+  BUILD_ID: ${{ github.sha }}
   CARGO_TERM_COLOR: always
 
 jobs:
@@ -18,13 +24,60 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: |
-          ~/.cargo/registry
-          ~/.cargo/git
+          ~/api/.cargo/registry
+          ~/api/.cargo/git
           target
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
     - name: Build
       run: cargo build --verbose
+      working-directory: ./api
 
     - name: Run tests
       run: cargo test --verbose
+      working-directory: ./api
+
+    - uses: google-github-actions/setup-gcloud@master
+      with:
+        version: 335.0.0
+        service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+
+    - run: gcloud auth configure-docker
+
+    - name: Docker Build
+      run: |
+        docker build \
+          -f ./Dockerfile \
+          --build-arg BUILD_ID=$BUILD_ID \
+          -t $REGISTRY_HOSTNAME/$GCP_PROJECT/$IMAGE:$GITHUB_SHA \
+          -t $REGISTRY_HOSTNAME/$GCP_PROJECT/$IMAGE:latest .
+      working-directory: ./api
+
+    - name: Publish
+      run: |
+        docker push $REGISTRY_HOSTNAME/$GCP_PROJECT/$IMAGE:$GITHUB_SHA
+        docker push $REGISTRY_HOSTNAME/$GCP_PROJECT/$IMAGE:latest
+
+    - name: Deploy to Cloud Run
+      run: |
+        gcloud run deploy axum-app-api \
+          --image $REGISTRY_HOSTNAME/$GCP_PROJECT/$IMAGE:$GITHUB_SHA \
+          --project $GCP_PROJECT \
+          --region $GCP_REGION \
+          --platform managed
+
+    - name: Update Github Deployments Status To Success
+      uses: chrnorm/deployment-status@releases/v1
+      with:
+        token: '${{ github.token }}'
+        state: 'success'
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
+    - name: Update Github Deployments Status To Error
+      if: failure()
+      uses: chrnorm/deployment-status@releases/v1
+      with:
+        token: '${{ github.token }}'
+        state: 'error'
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}

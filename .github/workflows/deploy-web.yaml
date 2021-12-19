@@ -2,8 +2,7 @@ name: deploy-web
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 env:
   GCP_PROJECT: axum-app
@@ -42,9 +41,11 @@ jobs:
 
       - name: lint
         run: yarn lint
+        working-directory: ./web
 
       - name: build
         run: yarn build
+        working-directory: ./web
 
       - uses: google-github-actions/setup-gcloud@master
         with:
@@ -57,10 +58,11 @@ jobs:
       - name: Docker Build
         run: |
           docker build \
-            -f ./docker/web/Dockerfile \
+            -f ./Dockerfile \
             --build-arg BUILD_ID=$BUILD_ID \
             -t $REGISTRY_HOSTNAME/$GCP_PROJECT/$IMAGE:$GITHUB_SHA \
             -t $REGISTRY_HOSTNAME/$GCP_PROJECT/$IMAGE:latest .
+        working-directory: ./web
 
       - name: Publish
         run: |
