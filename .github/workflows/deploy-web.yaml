@@ -38,6 +38,7 @@ jobs:
 
       - name: install deps
         run: yarn --frozen-lockfile
+        working-directory: ./web
 
       - name: lint
         run: yarn lint
