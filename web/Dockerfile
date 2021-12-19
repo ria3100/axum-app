@@ -28,6 +28,4 @@ COPY --from=deps /app/package.json ./package.json
 
 USER nextjs
 
-EXPOSE 3000
-
 CMD ["node_modules/.bin/next", "start"]

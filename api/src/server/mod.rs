@@ -20,7 +20,7 @@ pub async fn run() {
     // .route("/login", get(handlers::login))
     // .layer(AddExtensionLayer::new(AppContext::new()));
 
-    axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
+    axum::Server::bind(&"0.0.0.0:8080".parse().unwrap())
         .serve(app.into_make_service())
         .await
         .unwrap();
