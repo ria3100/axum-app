@@ -21,6 +21,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Create GitHub Deployments
+      uses: chrnorm/deployment-action@releases/v1
+      id: deployment
+      with:
+        token: '${{ github.token }}'
+        environment: 'development'
+        ref: '${{ github.sha }}'
+
     - uses: actions/cache@v2
       with:
         path: |
