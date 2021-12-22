@@ -1,16 +1,11 @@
 import {useEffect} from 'react';
-import api from '../api/$api';
-import aspida from '@aspida/fetch';
-const client = api(aspida(fetch));
+import {useHealth} from '../hooks/health';
 
 export const Foo: React.VFC = () => {
-  useEffect(() => {
-    (async (): Promise<void> => {
-      const foo = await client.health.get();
-      // eslint-disable-next-line no-console
-      console.log(foo);
-    })();
-  }, []);
+  const {data} = useHealth();
+
+  // eslint-disable-next-line no-console
+  useEffect(() => console.log(data), [data]);
 
   return <div>hello</div>;
 };
