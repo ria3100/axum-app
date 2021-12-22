@@ -2,7 +2,7 @@
 // prettier-ignore
 import { AspidaClient, BasicHeaders } from 'aspida'
 // prettier-ignore
-import { Methods as Methods0 } from './health'
+import { Methods as Methods0 } from '.'
 
 // prettier-ignore
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
@@ -11,13 +11,11 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const GET = 'GET'
 
   return {
-    health: {
-      get: (option?: { config?: T }) =>
-        fetch<void, BasicHeaders, Methods0['get']['status']>(prefix, PATH0, GET, option).send(),
-      $get: (option?: { config?: T }) =>
-        fetch<void, BasicHeaders, Methods0['get']['status']>(prefix, PATH0, GET, option).send().then(r => r.body),
-      $path: () => `${prefix}${PATH0}`
-    }
+    get: (option?: { config?: T }) =>
+      fetch<void, BasicHeaders, Methods0['get']['status']>(prefix, PATH0, GET, option).send(),
+    $get: (option?: { config?: T }) =>
+      fetch<void, BasicHeaders, Methods0['get']['status']>(prefix, PATH0, GET, option).send().then(r => r.body),
+    $path: () => `${prefix}${PATH0}`
   }
 }
 

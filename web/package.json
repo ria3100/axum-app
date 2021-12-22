@@ -6,14 +6,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "api:build": "openapi2aspida -i https://petstore.swagger.io/v2/swagger.json"
+    "api:build": "rm -fr ./apis && openapi2aspida --build"
   },
   "dependencies": {
     "@aspida/fetch": "^1.7.1",
+    "@mui/icons-material": "^5.2.5",
     "firebase": "^9.6.0",
     "next": "12.0.7",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "recoil": "^0.5.2",
     "swr": "^1.1.1"
   },
   "devDependencies": {
@@ -41,6 +43,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-storybook": "^0.5.3",
     "gts": "^3.1.0",
+    "openapi2aspida": "^0.16.5",
     "prettier": "^2.5.1",
     "storybook-addon-next-router": "^3.1.0",
     "storybook-addon-performance": "^0.16.1",
