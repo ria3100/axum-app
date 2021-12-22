@@ -5,13 +5,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "api:build": "openapi2aspida -i https://petstore.swagger.io/v2/swagger.json"
   },
   "dependencies": {
+    "@aspida/fetch": "^1.7.1",
     "firebase": "^9.6.0",
     "next": "12.0.7",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "swr": "^1.1.1"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.0.7",
@@ -23,7 +26,6 @@
     "@storybook/addon-postcss": "^2.0.0",
     "@storybook/addon-viewport": "^6.4.8",
     "@storybook/react": "^6.4.8",
-    "@types/node": "16.11.11",
     "@types/react": "17.0.37",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
@@ -42,6 +44,6 @@
     "prettier": "^2.5.1",
     "storybook-addon-next-router": "^3.1.0",
     "storybook-addon-performance": "^0.16.1",
-    "typescript": "4.5.2"
+    "typescript": "^4.5.4"
   }
 }

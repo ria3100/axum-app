@@ -2,11 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   env: {
-    ...require(`./src/config/${process.env.APP_ENV || 'local'}.json`),
-  },
-  webpack: (config, {isServer}) => {
-    // config.experiments = {asyncWebAssembly: true};
-    // config.output.webassemblyModuleFilename = (isServer ? '../' : '') + 'static/wasm/webassembly.wasm';
-    return config;
+    // eslint-disable-next-line node/no-unsupported-features/es-syntax
+    ...require(`./config/${process.env.APP_ENV || 'local'}.json`),
   },
 };

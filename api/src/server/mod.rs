@@ -2,11 +2,8 @@ mod handlers;
 
 // use crate::domains::posts::PostRepository;
 // use crate::infrastructures::repository::DBConnectRepositoryImpl;
-use axum::{
-    routing::get,
-    //  AddExtensionLayer,
-    Router,
-};
+use axum::{http::Method, routing::get, Router};
+use tower_http::cors::{CorsLayer, Origin};
 // use diesel::{
 //     r2d2::{ConnectionManager, Pool},
 //     PgConnection,
@@ -16,7 +13,12 @@ use axum::{
 pub async fn run() {
     let app = Router::new()
         .route("/", get(|| async { "Hello, World!" }))
-        .route("/health", get(handlers::get_health));
+        .route("/v1/health", get(handlers::get_health))
+        .layer(
+            CorsLayer::new()
+                .allow_origin(Origin::exact("http://localhost:3000".parse().unwrap()))
+                .allow_methods(vec![Method::GET]),
+        );
     // .route("/login", get(handlers::login))
     // .layer(AddExtensionLayer::new(AppContext::new()));
 
