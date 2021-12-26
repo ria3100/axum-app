@@ -12,14 +12,14 @@ pub struct Post {
 }
 
 impl Post {
-    // pub fn create(title: String, body: String) -> Self {
-    //     Self {
-    //         id: Default::default(),
-    //         title: title,
-    //         body: body,
-    //         published: false,
-    //     }
-    // }
+    pub fn create(title: String, body: String) -> Self {
+        Self {
+            id: Default::default(),
+            title: title,
+            body: body,
+            published: false,
+        }
+    }
 }
 
 pub trait PostRepository {
