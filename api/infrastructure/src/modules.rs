@@ -1,27 +1,27 @@
-use domain::{model::stock::Stock, repository::stock::StockRepository};
+use domain::{model::user::User, repository::user::UserRepository};
 
 use crate::{persistence::postgres::Db, repository::DatabaseRepositoryImpl};
 
 pub struct RepositoriesModule {
-    stock_repository: DatabaseRepositoryImpl<Stock>,
+  user_repository: DatabaseRepositoryImpl<User>,
 }
 
 pub trait RepositoriesModuleExt {
-    type StockRepo: StockRepository;
-    fn stock_repository(&self) -> &Self::StockRepo;
+  type UserRepo: UserRepository;
+  fn user_repository(&self) -> &Self::UserRepo;
 }
 
 impl RepositoriesModuleExt for RepositoriesModule {
-    type StockRepo = DatabaseRepositoryImpl<Stock>;
+  type UserRepo = DatabaseRepositoryImpl<User>;
 
-    fn stock_repository(&self) -> &Self::StockRepo {
-        &self.stock_repository
-    }
+  fn user_repository(&self) -> &Self::UserRepo {
+    &self.user_repository
+  }
 }
 
 impl RepositoriesModule {
-    pub fn new(db: Db) -> Self {
-        let stock_repository = DatabaseRepositoryImpl::new(db.clone());
-        Self { stock_repository }
-    }
+  pub fn new(db: Db) -> Self {
+    let user_repository = DatabaseRepositoryImpl::new(db.clone());
+    Self { user_repository }
+  }
 }

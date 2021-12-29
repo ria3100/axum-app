@@ -1,6 +1,9 @@
 use crate::{
     module::Modules,
-    routes::health::{hc, hc_db},
+    routes::{
+        current_user::current_user,
+        health::{hc, hc_db},
+    },
 };
 use axum::{routing::get, AddExtensionLayer, Router};
 use dotenv::dotenv;
@@ -8,13 +11,14 @@ use std::{net::SocketAddr, sync::Arc};
 
 pub async fn startup(modules: Arc<Modules>) {
     let hc_router = Router::new().route("/", get(hc)).route("/db", get(hc_db));
-    // let stocks_router = Router::new();
-    // // .route("/", post(create_stock))
-    // // .route("/:id", get(stock_view));
+    let user_router = Router::new().route("/:id", get(current_user));
+    // let users_router = Router::new();
+    // .route("/", post(create_user))
+    // // .route("/:id", get(user_view));
 
     let app = Router::new()
         .nest("/hc", hc_router)
-        // .nest("/stocks", stocks_router)
+        .nest("/current_user", user_router)
         .layer(AddExtensionLayer::new(modules));
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 8080));

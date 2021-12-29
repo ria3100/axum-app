@@ -1,2 +1,1 @@
-drop table stock;
-drop table market_kind;
+drop table users;
