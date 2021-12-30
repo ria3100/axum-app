@@ -21,6 +21,7 @@ impl UserRepository for DatabaseRepositoryImpl<User> {
             .fetch_one(&*pool)
             .await
             .ok();
+
         match user_table {
             Some(st) => Ok(Some(st.try_into()?)),
             None => Ok(None),
