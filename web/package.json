@@ -6,15 +6,18 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "api:build": "rm -fr ./apis && openapi2aspida --build"
+    "api:build": "rm -fr ./api && openapi2aspida --build"
   },
   "dependencies": {
     "@aspida/fetch": "^1.7.1",
     "@mui/icons-material": "^5.2.5",
+    "blueimp-load-image": "^5.16.0",
     "firebase": "^9.6.0",
     "next": "12.0.7",
     "react": "^18.0.0-rc.0",
     "react-dom": "^18.0.0-rc.0",
+    "react-firebaseui": "^6.0.0",
+    "react-hook-form": "^7.22.5",
     "recoil": "^0.5.2",
     "swr": "^1.1.1"
   },

@@ -1,4 +1,11 @@
 {
   "NEXT_PUBLIC_APP_ENV": "development",
-  "NEXT_PUBLIC_API_ORIGIN": "https://axum-app-api-4jms5lvplq-uc.a.run.app"
+  "NEXT_PUBLIC_API_ORIGIN": "https://axum-app-api-4jms5lvplq-uc.a.run.app",
+  "NEXT_PUBLIC_FIREBASE_API_KEY": "AIzaSyBBrMQEnqAHnerggzkfvsCDrJFbF-Ym8gk",
+  "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN": "axum-app.firebaseapp.com",
+  "NEXT_PUBLIC_FIREBASE_PROJECT_ID": "axum-app",
+  "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET": "axum-app.appspot.com",
+  "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "243536076736",
+  "NEXT_PUBLIC_FIREBASE_APP_ID": "1:243536076736:web:61c09c01f4e974e2257225",
+  "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID": "G-MCTW7EPB94"
 }

@@ -1,0 +1,44 @@
+.wrapper {
+    --icon-size: 200px;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: calc(var(--space) * 100px);
+    margin-top: calc(var(--space) * 10px);
+    justify-content: center;
+}
+
+.icon_image {
+    border-radius: 50%;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    background-size: cover;
+    background-position: center;
+    border: calc(var(--space) * .5px) solid var(--color-mono-a);
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.body {
+    margin-top: calc(var(--space) * 4px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.file_input {
+    display: none;
+}
+
+.error_message {
+    color: var(--color-red-0);
+    font-size: var(--font-size-30);
+    height: calc(var(--space) * 4px);
+}

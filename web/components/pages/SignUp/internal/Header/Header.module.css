@@ -1,0 +1,14 @@
+.wrapper {
+    display: flex;
+    height: var(--header-height);
+    box-shadow: var(--shadow-lv3);
+    justify-content: center;
+    width: 100%;
+}
+
+.container {
+    width: calc(var(--space) * 200px);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

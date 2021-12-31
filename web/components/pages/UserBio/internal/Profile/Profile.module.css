@@ -1,0 +1,96 @@
+.wrapper {
+    --icon-size: 200px;
+}
+
+.wrapper {
+    display: flex;
+    background: var(--color-mono-a);
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    padding-bottom: calc(var(--space) * 7px);
+}
+
+.cover_image {
+    width: 100%;
+    height: calc(var(--space) * 35px);
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+}
+
+.container {
+    width: calc(var(--space) * 160px);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: calc(var(--space) * 35px - var(--icon-size) / 1.5);
+}
+
+.icon_image {
+    border-radius: 50%;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    background-size: cover;
+    background-position: center;
+    border: calc(var(--space) * .5px) solid var(--color-mono-a);
+}
+
+.icon_and_sns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sns_buttons {
+    margin-top: calc(var(--icon-size) / 1.5);
+    display: flex;
+    flex-direction: row;
+}
+
+.body {
+    margin-top: calc(var(--space) * 4px);
+    display: flex;
+    justify-content: space-between;
+}
+.user_name {
+    font-size: var(--font-size-80);
+    font-weight: bold;
+    display: inline;
+}
+.screen_name {
+    font-size: var(--font-size-60);
+    font-weight: bold;
+    color: var(--color-mono-40);
+}
+.belongs_and_job {
+    margin-left: calc(var(--space) * 3px);
+    font-size: var(--font-size-40);
+    color: var(--color-mono-40);
+}
+.follow_area {
+    display: flex;
+    flex-direction: column;
+}
+
+.bio {
+    margin-top: calc(var(--space) * 5px);
+}
+
+.sns_icon {
+    width: calc(var(--space) * 7px);
+    height: calc(var(--space) * 7px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin: calc(var(--space) * 1px) 0 0 calc(var(--space) * 1.5px);
+}
+
+.twitter_icon {
+    background: #00acee;
+}
+
+.github_icon {
+    background: #171515;
+}

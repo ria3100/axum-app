@@ -2,7 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   experimental: {
-    concurrentFeatures: true,
+    // concurrentFeatures: true,
   },
   env: {
     // eslint-disable-next-line node/no-unsupported-features/es-syntax

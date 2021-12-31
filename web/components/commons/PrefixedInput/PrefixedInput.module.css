@@ -1,0 +1,35 @@
+.wrapper {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.label {
+    display: flex;
+}
+
+.field {
+    border-radius: var(--radius-m);
+    border: 1px solid var(--color-mono-50);
+    padding: calc(var(--space) * 2px);
+    box-sizing: border-box;
+    outline: none;
+}
+
+.prefix {
+    padding: 0;
+    color: var(--color-mono-40);
+    user-select: none;
+}
+.input {
+    border: none;
+    box-sizing: border-box;
+    outline: none;
+    padding: 0;
+}
+
+.error_message {
+    display: flex;
+    color: var(--color-red-0);
+    font-size: var(--font-size-30);
+    height: calc(var(--space) * 4px);
+}

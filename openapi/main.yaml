@@ -1,13 +1,484 @@
-openapi: '3.0.2'
+openapi: 3.0.3
 info:
-  title: API Title
-  version: '1.0'
+  title: Biost
+  description: 'API仕様'
+  version: 1.0.0
 servers:
-  # - url: https://axum-app-api-4jms5lvplq-uc.a.run.app/v1
-  - url: http://localhost:8080/v1
+- url: http://localhost:8080
+tags:
+- name: user
+  description: ユーザー情報
+- name: topic
+  description: 技術 (言語やFW) 情報
+- name: like_topics
+  description: ユーザーの好きな技術情報
+- name: achievements
+  description: ユーザーの実績情報
+- name: image
+  description: 画像情報
+- name: health
+  description: ヘルスチェック
 paths:
+  /current_user:
+    get:
+      security:
+      - Bearer: []
+      tags:
+      - user
+      summary: ログイン中のユーザーを取得
+      operationId: getCurrentUser
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /user:
+    post:
+      security:
+      - Bearer: []
+      tags:
+      - user
+      summary: ユーザーを作成
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/NewUser'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Invalid id supplied
+          content: {}
+        404:
+          description: User not found
+          content: {}
+  /user/{screen_name}:
+    get:
+      tags:
+      - user
+      summary: ユーザーを取得
+      operationId: getUserById
+      parameters:
+      - name: screen_name
+        in: path
+        description: '対象の screen_name'
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Invalid id supplied
+          content: {}
+        404:
+          description: User not found
+          content: {}
+    put:
+      security:
+      - Bearer: []
+      tags:
+      - user
+      summary: ユーザーを更新
+      operationId: updateUser
+      parameters:
+      - name: screen_name
+        in: path
+        description: '対象の screen_name'
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Updated user object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/ChangeUser'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Invalid id supplied
+          content: {}
+        404:
+          description: User not found
+          content: {}
+      x-codegen-request-body-name: body
+    delete:
+      security:
+      - Bearer: []
+      tags:
+      - user
+      summary: ユーザーを削除
+      operationId: deleteUser
+      parameters:
+      - name: screen_name
+        in: path
+        description: '対象の screen_name'
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uid:
+                    type: string
+              example:
+                uid: bRWH1ZL1FHUrmpTzRBWTDFgAka73
+        400:
+          description: Invalid id supplied
+          content: {}
+        404:
+          description: User not found
+          content: {}
+  /topic:
+    get:
+      tags:
+      - topic
+      summary: ツールを検索
+      operationId: findTopic
+      requestBody:
+        description: Updated user object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/UploadImage'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Ok
+    post:
+      security:
+      - Bearer: []
+      tags:
+      - topic
+      summary: ツールを新規登録
+      operationId: uploadTopic
+      requestBody:
+        description: Updated user object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/UploadImage'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Ok
+  /topic/{id}:
+    put:
+      security:
+      - Bearer: []
+      tags:
+      - topic
+      summary: ツールの更新申請
+      operationId: uploadTopic
+      requestBody:
+        description: Updated user object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/UploadImage'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Ok
+  /like_topics/{screen_name}:
+    get:
+      tags:
+      - like_topics
+      summary: 好きな技術を取得
+      operationId: findTopic
+      requestBody:
+        description: Updated user object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/UploadImage'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Ok
+    post:
+      security:
+      - Bearer: []
+      tags:
+      - like_topics
+      summary: 好きな技術を登録
+      operationId: uploadTopic
+      requestBody:
+        description: Updated user object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/UploadImage'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Ok
+  /achievements/{screen_name}:
+    get:
+      tags:
+      - achievements
+      summary: 実績を取得
+      operationId: findTopic
+      requestBody:
+        description: Updated user object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/UploadImage'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Ok
+    post:
+      security:
+      - Bearer: []
+      tags:
+      - achievements
+      summary: 実績を登録
+      operationId: uploadTopic
+      requestBody:
+        description: Updated user object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/UploadImage'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Ok
+  /upload_image:
+    post:
+      security:
+      - Bearer: []
+      tags:
+      - image
+      summary: 画像の追加ログを登録
+      operationId: uploadImage
+      requestBody:
+        description: Updated user object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/UploadImage'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Ok
   /health:
     get:
+      tags:
+      - health
+      summary: ヘルスチェック
+      operationId: health
       responses:
-        '200':
-          description: OK
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Ok
+components:
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      description: Credentials or access token for API
+  schemas:
+    User:
+      type: object
+      required:
+        - uid
+        - screen_name
+        - name
+        - belongs
+        - job
+        - bio
+        - icon_image_url
+        - cover_image_url
+        - twitter_username
+        - github_username
+        - website_url
+        - created_at
+        - updated_at
+      properties:
+        uid:
+          type: string
+        screen_name:
+          type: string
+        name:
+          type: string
+        belongs:
+          type: string
+        job:
+          type: string
+        bio:
+          type: string
+        icon_image_url:
+          type: string
+        cover_image_url:
+          type: string
+        twitter_username:
+          type: string
+        github_username:
+          type: string
+        website_url:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      example:
+        uid: bRWH1ZL1FHUrmpTzRBWTDFgAka73
+        screen_name: ria
+        name: リア
+        belongs: tricot
+        job: Web Engineer
+        bio: bio!
+        icon_image_url: ''
+        cover_image_url: ''
+        twitter_username: _Ria0130
+        github_username: ria3100
+        website_url: https://ria0130.dev
+        created_at: '2021-06-09T14:39:00.664074'
+        updated_at: '2021-06-09T14:39:00.664074'
+    NewUser:
+      type: object
+      required:
+        - uid
+        - screen_name
+        - name
+        - icon_image_url
+      properties:
+        uid:
+          type: string
+        screen_name:
+          type: string
+        name:
+          type: string
+        icon_image_url:
+          type: string
+      example:
+        screen_name: ria
+        name: リア
+        icon_image_url: ''
+    ChangeUser:
+      type: object
+      required:
+        - screen_name
+        - name
+        - belongs
+        - job
+        - bio
+        - icon_image_url
+        - cover_image_url
+        - twitter_username
+        - github_username
+        - website_url
+      properties:
+        screen_name:
+          type: string
+        name:
+          type: string
+        belongs:
+          type: string
+        job:
+          type: string
+        bio:
+          type: string
+        icon_image_url:
+          type: string
+        cover_image_url:
+          type: string
+        twitter_username:
+          type: string
+        github_username:
+          type: string
+        website_url:
+          type: string
+      example:
+        screen_name: ria
+        name: リア
+        belongs: tricot
+        job: Web Engineer
+        bio: bio!
+        icon_image_url: ''
+        cover_image_url: ''
+        twitter_username: _Ria0130
+        github_username: ria3100
+        website_url: https://ria0130.dev
+    UploadImage:
+      type: object
+      required:
+        - file_name
+      properties:
+        file_name:
+          type: string
+      example:
+        file_name: a6463c43-cd55-4dc1-9261-ff7b6677b7c6.jpg

@@ -1,0 +1,12 @@
+.wrapper {
+    display: flex;
+    height: calc(var(--space) * 20px);
+    justify-content: center;
+    background: var(--color-mono-10);
+    color: var(--color-mono-a);
+}
+
+.container {
+    width: calc(var(--space) * 200px);
+    display: flex;
+}

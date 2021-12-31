@@ -1,0 +1,13 @@
+.wrapper {
+    display: flex;
+    height: var(--header-height);
+    justify-content: center;
+    position: fixed;
+    width: 100%;
+    background: var(--color-mono-60);
+}
+
+.container {
+    width: calc(var(--space) * 160px);
+    display: flex;
+}

@@ -1,0 +1,26 @@
+.wrapper {
+    display: flex;
+    height: var(--header-height);
+    justify-content: center;
+    position: fixed;
+    width: 100%;
+    background-image: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
+    color: var(--color-mono-a);
+    padding: calc(var(--space) * 20px) 0;
+}
+
+.container {
+    width: calc(var(--space) * 160px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.site_title {
+    display: flex;
+}
+
+.sub_title {
+    display: flex;
+}
