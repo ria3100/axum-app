@@ -1,8 +1,7 @@
-use chrono::{DateTime, Local};
 use domain::model::user::{NewUser, User};
 use sqlx::FromRow;
 
-#[derive(FromRow)]
+#[derive(FromRow, Debug)]
 pub struct UserTable {
     pub uid: String,
     pub screen_name: String,
@@ -15,8 +14,8 @@ pub struct UserTable {
     pub twitter_username: String,
     pub github_username: String,
     pub website_url: String,
-    pub created_at: DateTime<Local>,
-    pub updated_at: DateTime<Local>,
+    pub created_at: chrono::NaiveDateTime,
+    pub updated_at: chrono::NaiveDateTime,
 }
 
 impl TryFrom<UserTable> for User {
@@ -43,8 +42,10 @@ impl TryFrom<UserTable> for User {
 impl TryFrom<NewUser> for UserTable {
     type Error = anyhow::Error;
     fn try_from(s: NewUser) -> Result<Self, Self::Error> {
+        let local = chrono::Local::now();
+
         Ok(UserTable {
-            uid: s.uid.value.to_string(),
+            uid: s.uid,
             screen_name: s.screen_name,
             name: s.name,
             belongs: s.belongs,
@@ -55,8 +56,8 @@ impl TryFrom<NewUser> for UserTable {
             twitter_username: s.twitter_username,
             github_username: s.github_username,
             website_url: s.website_url,
-            created_at: Local::now(),
-            updated_at: Local::now(),
+            created_at: local.naive_local(),
+            updated_at: local.naive_local(),
         })
     }
 }

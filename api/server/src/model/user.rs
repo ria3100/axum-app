@@ -5,6 +5,8 @@ use validator::Validate;
 #[derive(Deserialize, Debug, Validate)]
 pub struct JsonCreateUser {
     #[validate(length(min = 1, max = 255))]
+    uid: String,
+    #[validate(length(min = 1, max = 255))]
     screen_name: String,
     #[validate(length(min = 1, max = 255))]
     name: String,
@@ -29,6 +31,7 @@ pub struct JsonCreateUser {
 impl From<JsonCreateUser> for CreateUser {
     fn from(s: JsonCreateUser) -> Self {
         CreateUser {
+            uid: s.uid,
             screen_name: s.screen_name,
             name: s.name,
             belongs: s.belongs,

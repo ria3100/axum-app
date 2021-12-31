@@ -17,7 +17,7 @@ pub struct UserView {
 impl UserView {
     pub fn new(user: User) -> Self {
         Self {
-            uid: user.uid.value.to_string(),
+            uid: user.uid,
             screen_name: user.screen_name,
             name: user.name,
             belongs: user.belongs,

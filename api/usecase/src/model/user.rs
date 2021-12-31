@@ -1,8 +1,9 @@
 use derive_new::new;
-use domain::model::{user::NewUser, Id};
+use domain::model::user::NewUser;
 
 #[derive(new)]
 pub struct CreateUser {
+    pub uid: String,
     pub screen_name: String,
     pub name: String,
     pub belongs: String,
@@ -19,9 +20,8 @@ impl TryFrom<CreateUser> for NewUser {
     type Error = anyhow::Error;
 
     fn try_from(c: CreateUser) -> anyhow::Result<Self> {
-        let uid = Id::gen();
         Ok(NewUser::new(
-            uid,
+            c.uid,
             c.screen_name,
             c.name,
             c.belongs,
