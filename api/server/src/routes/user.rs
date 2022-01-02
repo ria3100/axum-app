@@ -15,7 +15,7 @@ use crate::{
 };
 
 #[tracing::instrument(skip(modules))]
-async fn current_user(
+async fn get_user(
     Path(uid): Path<String>,
     Extension(modules): Extension<Arc<Modules>>,
 ) -> Result<impl IntoResponse, StatusCode> {
@@ -35,5 +35,5 @@ async fn current_user(
 }
 
 pub fn router() -> Router {
-    Router::new().route("/:id", get(current_user))
+    Router::new().route("/:id", get(get_user))
 }
