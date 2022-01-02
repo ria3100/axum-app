@@ -1,5 +1,5 @@
 module.exports = {
   input: 'api',
   outputEachDir: true,
-  openapi: {inputFile: 'https://petstore.swagger.io/v2/swagger.json'},
+  openapi: {inputFile: '../openapi/main.yaml'},
 };

@@ -6,19 +6,17 @@ import { Methods as Methods0 } from '.'
 
 // prettier-ignore
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
-  const prefix = (baseURL === undefined ? 'https://petstore.swagger.io/v2' : baseURL).replace(/\/$/, '')
-  const PATH0 = '/store/inventory'
+  const prefix = (baseURL === undefined ? 'http://localhost:8080' : baseURL).replace(/\/$/, '')
+  const PATH0 = '/current_user'
   const GET = 'GET'
 
   return {
     /**
-     * Returns a map of status codes to quantities
      * @returns successful operation
      */
     get: (option?: { config?: T }) =>
       fetch<Methods0['get']['resBody'], BasicHeaders, Methods0['get']['status']>(prefix, PATH0, GET, option).json(),
     /**
-     * Returns a map of status codes to quantities
      * @returns successful operation
      */
     $get: (option?: { config?: T }) =>

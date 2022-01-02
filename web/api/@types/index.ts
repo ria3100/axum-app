@@ -1,48 +1,40 @@
 /* eslint-disable */
-export type ApiResponse = {
-  code: number
-  type: string
-  message: string
-}
-
-export type Category = {
-  id: number
-  name: string
-}
-
-export type Pet = {
-  id?: number
-  category?: Category
-  name: string
-  photoUrls: string[]
-  tags?: Tag[]
-  /** pet status in the store */
-  status?: 'available' | 'pending' | 'sold'
-}
-
-export type Tag = {
-  id: number
-  name: string
-}
-
-export type Order = {
-  id: number
-  petId: number
-  quantity: number
-  shipDate: string
-  /** Order Status */
-  status: 'placed' | 'approved' | 'delivered'
-  complete: boolean
-}
-
 export type User = {
-  id: number
-  username: string
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-  phone: string
-  /** User Status */
-  userStatus: number
+  uid: string
+  screen_name: string
+  name: string
+  belongs: string
+  job: string
+  bio: string
+  icon_image_url: string
+  cover_image_url: string
+  twitter_username: string
+  github_username: string
+  website_url: string
+  created_at: string
+  updated_at: string
+}
+
+export type NewUser = {
+  uid: string
+  screen_name: string
+  name: string
+  icon_image_url: string
+}
+
+export type ChangeUser = {
+  screen_name: string
+  name: string
+  belongs: string
+  job: string
+  bio: string
+  icon_image_url: string
+  cover_image_url: string
+  twitter_username: string
+  github_username: string
+  website_url: string
+}
+
+export type UploadImage = {
+  file_name: string
 }

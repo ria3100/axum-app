@@ -8,13 +8,18 @@ export type Methods = {
     resBody: Types.User
   }
 
-  /** This can only be done by the logged in user. */
   put: {
-    /** Updated user object */
-    reqBody: Types.User
+    status: 200
+    /** successful operation */
+    resBody: Types.User
   }
 
-  /** This can only be done by the logged in user. */
   delete: {
+    status: 200
+
+    /** successful operation */
+    resBody: {
+      uid: string
+    }
   }
 }
