@@ -1540,6 +1540,7 @@ dependencies = [
  "serde",
  "thiserror",
  "tokio 1.15.0",
+ "tower-http",
  "tracing",
  "tracing-subscriber",
  "usecase",

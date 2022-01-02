@@ -5,16 +5,22 @@ use crate::{
         user::router as user_router,
     },
 };
-use axum::{AddExtensionLayer, Router};
+use axum::{http::Method, AddExtensionLayer, Router};
 use dotenv::dotenv;
 use std::{net::SocketAddr, sync::Arc};
+use tower_http::cors::{CorsLayer, Origin};
 
 pub async fn startup(modules: Arc<Modules>) {
+    let cors = CorsLayer::new()
+        .allow_origin(Origin::exact("http://localhost:3000".parse().unwrap()))
+        .allow_methods(vec![Method::GET]);
+
     let app = Router::new()
         .nest("/hc", health_router())
         .nest("/current_user", current_user_router())
         .nest("/user", user_router())
-        .layer(AddExtensionLayer::new(modules));
+        .layer(AddExtensionLayer::new(modules))
+        .layer(cors);
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 8080));
 
