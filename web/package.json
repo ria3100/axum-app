@@ -14,6 +14,7 @@
     "blueimp-load-image": "^5.16.0",
     "firebase": "^9.6.0",
     "next": "12.0.7",
+    "next-runtime": "^2.3.2",
     "react": "^18.0.0-rc.0",
     "react-dom": "^18.0.0-rc.0",
     "react-firebaseui": "^6.0.0",

@@ -1,6 +1,6 @@
 {
   "NEXT_PUBLIC_APP_ENV": "local",
-  "NEXT_PUBLIC_API_ORIGIN": "https://axum-app-api-4jms5lvplq-uc.a.run.app",
+  "NEXT_PUBLIC_API_ORIGIN": "http://localhost:8080",
   "NEXT_PUBLIC_FIREBASE_API_KEY": "AIzaSyBBrMQEnqAHnerggzkfvsCDrJFbF-Ym8gk",
   "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN": "axum-app.firebaseapp.com",
   "NEXT_PUBLIC_FIREBASE_PROJECT_ID": "axum-app",

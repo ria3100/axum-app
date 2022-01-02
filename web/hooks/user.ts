@@ -1,22 +1,14 @@
 // import useAspidaSWR from '@aspida/swr';
-// import useSWR from 'swr';
-// import {User} from '../api/@types';
-// import {client} from '../lib/aspida';
+import useSWR from 'swr';
+import {User} from '../api/@types';
+import {client} from '../lib/aspida';
 
-type User = any;
-
-export const useGetUser = (screenName: string, initialUserData?: User): any => {
-  // const key = initialUserData ? {initialData: initialUserData} : {};
-
-  // const {data, error} = useSWR(client.user._screen_name(screenName), {
-  //   ...key,
-  //   enabled: !!screenName,
-  // });
-
-  // eslint-disable-next-line no-console
-  console.log({screenName, initialUserData});
-  const data = null;
-  const error = null;
+export const useGetUser = (screenName: string, initialData?: User): any => {
+  const {data, error} = useSWR(
+    client.user._screen_name(screenName).$path(),
+    client.user._screen_name(screenName).$get,
+    {fallbackData: initialData}
+  );
 
   return {
     user: data,

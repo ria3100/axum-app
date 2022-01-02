@@ -1,6 +1,7 @@
-import {NextPage} from 'next';
+import {NextPage, GetServerSidePropsResult} from 'next';
 import {useRouter} from 'next/router';
-import {User} from '../apis/@types';
+import {handle, RuntimeContext} from 'next-runtime';
+import {User} from '../api/@types';
 import {useGetUser} from '../hooks/user';
 import ErrorPage from './_error';
 import {client} from '../lib/aspida';
@@ -19,16 +20,12 @@ const UserPage: NextPage<Props> = ({screenName, initialUserData}) => {
 
 export default UserPage;
 
-type StaticProps = {params: {screen_name: string}};
-export const getStaticProps = async ({params}: StaticProps) => {
-  const screenName = params.screen_name;
+type ServerContext = RuntimeContext<{screen_name: string}>;
+export const getServerSideProps = handle({
+  async get({params}: ServerContext): Promise<GetServerSidePropsResult<Props>> {
+    const screenName = params?.screen_name as string;
+    const user = await client.user._screen_name(screenName).$get();
 
-  const user = await client.user._screen_name(screenName).$get();
-
-  return {props: {screenName, initialUserData: user}};
-};
-
-export const getStaticPaths = async () => ({
-  paths: [],
-  fallback: true,
+    return {props: {screenName, initialUserData: user}};
+  },
 });
