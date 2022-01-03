@@ -1,11 +1,7 @@
 use std::sync::Arc;
 
 use axum::{
-    extract::{Extension, Path},
-    http::StatusCode,
-    response::IntoResponse,
-    routing::get,
-    Json, Router,
+    extract::Extension, http::StatusCode, response::IntoResponse, routing::get, Json, Router,
 };
 use tracing::error;
 
@@ -16,10 +12,9 @@ use crate::{
 
 #[tracing::instrument(skip(modules))]
 async fn current_user(
-    Path(uid): Path<String>,
     Extension(modules): Extension<Arc<Modules>>,
 ) -> Result<impl IntoResponse, StatusCode> {
-    let res = modules.user_use_case().find(uid).await;
+    let res = modules.user_use_case().find(String::from("1234")).await;
     match res {
         Ok(user_view) => user_view
             .map(|user_view| {
@@ -35,5 +30,5 @@ async fn current_user(
 }
 
 pub fn router() -> Router {
-    Router::new().route("/:id", get(current_user))
+    Router::new().route("/", get(current_user))
 }

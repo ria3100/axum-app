@@ -13,7 +13,7 @@ use tower_http::cors::{CorsLayer, Origin};
 pub async fn startup(modules: Arc<Modules>) {
     let cors = CorsLayer::new()
         .allow_origin(Origin::exact("http://localhost:3000".parse().unwrap()))
-        .allow_methods(vec![Method::GET]);
+        .allow_methods(vec![Method::GET, Method::POST, Method::PUT, Method::DELETE]);
 
     let app = Router::new()
         .nest("/hc", health_router())
