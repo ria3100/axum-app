@@ -13,14 +13,15 @@
     "@mui/icons-material": "^5.2.5",
     "blueimp-load-image": "^5.16.0",
     "firebase": "^9.6.0",
+    "firebaseui": "^6.0.0",
     "next": "12.0.7",
     "next-runtime": "^2.3.2",
     "react": "^18.0.0-rc.0",
     "react-dom": "^18.0.0-rc.0",
-    "react-firebaseui": "^6.0.0",
     "react-hook-form": "^7.22.5",
     "recoil": "^0.5.2",
-    "swr": "^1.1.1"
+    "swr": "^1.1.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.0.7",
@@ -32,7 +33,9 @@
     "@storybook/addon-postcss": "^2.0.0",
     "@storybook/addon-viewport": "^6.4.8",
     "@storybook/react": "^6.4.8",
+    "@types/blueimp-load-image": "^5.14.4",
     "@types/react": "17.0.37",
+    "@types/uuid": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
     "eslint": "^8.4.0",

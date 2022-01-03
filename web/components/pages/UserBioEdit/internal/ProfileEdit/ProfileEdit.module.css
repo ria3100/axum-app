@@ -1,53 +1,51 @@
 .wrapper {
-    --icon-size: 200px;
+  --icon-size: 200px;
 }
 
 .wrapper {
-    display: flex;
-    background: var(--color-mono-a);
-    justify-content: center;
-    width: 100%;
-    position: relative;
-    padding-bottom: calc(var(--space) * 7px);
+  display: flex;
+  background: var(--color-mono-a);
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  padding-bottom: calc(var(--space) * 7px);
 }
 
 .cover_image {
-    width: 100%;
-    height: calc(var(--space) * 35px);
-    background-size: cover;
-    background-position: center;
-    position: absolute;
-    top: 0;
-    cursor: pointer;
+  width: 100%;
+  height: calc(var(--space) * 35px);
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  cursor: pointer;
 }
 
 .container {
-    width: calc(var(--space) * 160px);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin-top: calc(var(--space) * 35px - var(--icon-size) / 1.5);
+  width: calc(var(--space) * 160px);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-top: calc(var(--space) * 35px - var(--icon-size) / 1.5);
 }
 
 .icon_image {
-    border-radius: 50%;
-    width: var(--icon-size);
-    height: var(--icon-size);
-    background-size: cover;
-    background-position: center;
-    border: calc(var(--space) * .5px) solid var(--color-mono-a);
-    cursor: pointer;
+  border-radius: 50%;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  background-size: cover;
+  background-position: center;
+  border: calc(var(--space) * 0.5px) solid var(--color-mono-a);
+  cursor: pointer;
 }
 
 .body {
-    margin-top: calc(var(--space) * 4px);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  margin-top: calc(var(--space) * 4px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .file_input {
-    display: none;
+  display: none;
 }
-
-icon_image_input

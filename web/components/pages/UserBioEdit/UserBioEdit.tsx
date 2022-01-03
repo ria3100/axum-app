@@ -1,15 +1,14 @@
 import {Header} from '../../commons/Header';
 import {Footer} from '../../commons/Footer';
 import {ProfileEdit} from './internal/ProfileEdit';
-import {useRecoilState} from 'recoil';
-import {currentUserState} from '../../../recoil/atoms';
+import {useCurrentUserState} from '../../../recoil/currentUserState';
 import {Loading} from '../Loading';
 
 import styles from './UserBioEdit.module.css';
 
 type Props = {};
 export const UserBioEdit: React.VFC<Props> = () => {
-  const [currentUser] = useRecoilState(currentUserState);
+  const currentUser = useCurrentUserState();
 
   if (currentUser.isLoading) return <Loading />;
   if (!currentUser.userData) return <div>nologin</div>;

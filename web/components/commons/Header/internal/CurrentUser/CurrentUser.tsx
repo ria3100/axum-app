@@ -1,5 +1,6 @@
 import {useState} from 'react';
-import {User} from '../../../../../apis/@types';
+import Image from 'next/image';
+import {User} from '../../../../../api/@types';
 import {Button} from '../../../Button';
 import Link from 'next/link';
 import {RingsLoadingIcon} from '../../../../icons/RingsLoadingIcon';
@@ -7,7 +8,7 @@ import {RingsLoadingIcon} from '../../../../icons/RingsLoadingIcon';
 import styles from './CurrentUser.module.css';
 
 type Props = {
-  user: User;
+  user?: User;
   signOut: () => void;
   signIn: () => void;
   isLoading: boolean;
@@ -22,11 +23,11 @@ export const CurrentUser: React.VFC<Props> = ({
   const [showMenu, setShowMenu] = useState(false);
 
   const menu = {
-    open: () => setShowMenu(true),
-    close: () => setShowMenu(false),
+    open: (): void => setShowMenu(true),
+    close: (): void => setShowMenu(false),
   };
 
-  const handleSignOut = () => {
+  const handleSignOut = (): void => {
     menu.close();
     signOut();
   };
@@ -48,6 +49,8 @@ export const CurrentUser: React.VFC<Props> = ({
             className={styles.user_icon}
             src={user.icon_image_url}
             onClick={menu.open}
+            width={200}
+            height={200}
             alt=""
           />
           {showMenu && (

@@ -1,27 +1,25 @@
-import {authClient} from '../lib/aspida';
-import {useRecoilState} from 'recoil';
-import {currentUserState} from '../recoil/atoms';
-import {auth} from '../lib/firebase';
+import useSWR from 'swr';
+import {client, authClient} from '../lib/aspida';
+import {useCurrentUserState} from '../recoil/currentUserState';
+import {User} from './../api/@types';
 
-export const useCurrentUser = () => {
-  const [, setCurrentUser] = useRecoilState(currentUserState);
+type UseGetCurrentUser = () => {
+  user?: User;
+  isLoading: boolean;
+  isError: boolean;
+};
 
-  const fetchCurrentUser = async token => {
-    return await authClient(token)
-      .current_user.$get()
-      .catch(res => {
-        if (res?.response?.status === 404) return;
-        throw '';
-      });
-  };
+export const useGetCurrentUser: UseGetCurrentUser = () => {
+  const {authToken} = useCurrentUserState();
 
-  const signOut = () => {
-    setCurrentUser({isLoading: false});
-    auth().signOut();
-  };
+  const path = authToken != null ? client.current_user.$path() : null;
+  const fetcher = authClient(authToken + '').current_user.$get;
+
+  const {data, error} = useSWR(path, fetcher);
 
   return {
-    fetchCurrentUser,
-    signOut,
+    user: data,
+    isLoading: !error && !data,
+    isError: error,
   };
 };

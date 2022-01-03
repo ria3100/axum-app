@@ -1,42 +1,35 @@
 import type {AppProps} from 'next/app';
 import {RecoilRoot} from 'recoil';
-import {auth} from '../lib/firebase';
+import {initialize} from '../lib/firebase';
 import {useEffect} from 'react';
-import {useCurrentUser} from '../hooks/currentUser';
-import {useRecoilState} from 'recoil';
-import {currentUserState} from '../recoil/atoms';
-import {useRouter} from 'next/router';
+import {getAuth} from 'firebase/auth';
+import {useGetCurrentUser} from '../hooks/currentUser';
+import {useCurrentUserMutators} from '../recoil/currentUserState';
 
 import '../styles/globals.css';
 
 const AuthProvider: React.VFC<{children: React.ReactNode}> = ({children}) => {
-  const [, setCurrentUser] = useRecoilState(currentUserState);
-  const {fetchCurrentUser} = useCurrentUser();
-  const router = useRouter();
+  initialize();
+  const {setCurrentUser, loadingCurrentUser, resetCurrentUser} =
+    useCurrentUserMutators();
+  const auth = getAuth();
 
   useEffect(() => {
-    setCurrentUser({isLoading: true});
+    loadingCurrentUser();
+
     auth.onAuthStateChanged(async user => {
       if (user) {
         const token = await user.getIdToken();
 
-        await fetchCurrentUser(token).then(userData => {
-          setCurrentUser({
-            isLoading: false,
-            userData: userData || undefined,
-            uid: user.uid,
-            authToken: token,
-          });
-
-          if (!userData) {
-            router.push('/signup');
-          }
-        });
+        setCurrentUser({uid: user.uid, authToken: token});
       } else {
-        setCurrentUser({isLoading: false});
+        resetCurrentUser();
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useGetCurrentUser();
 
   return <>{children}</>;
 };

@@ -4,16 +4,15 @@ import {GitHubIcon} from '../../../../icons/GitHubIcon';
 import {getGitHubUrl, getTwitterUrl} from '../../../../../utils/social';
 import Link from 'next/link';
 import {Button} from '../../../../commons/Button';
-import {useRecoilState} from 'recoil';
-import {currentUserState} from '../../../../../recoil/atoms';
+import {useCurrentUserState} from '../../../../../recoil/currentUserState';
 
 import styles from './Profile.module.css';
 
 type Props = {screenName: string};
 
 export const Profile: React.VFC<Props> = ({screenName}) => {
-  const [currentUser] = useRecoilState(currentUserState);
-  const {user, isError} = useGetUser(screenName);
+  const currentUser = useCurrentUserState();
+  const {user} = useGetUser(screenName);
 
   if (!user) return null;
 
@@ -42,6 +41,7 @@ export const Profile: React.VFC<Props> = ({screenName}) => {
                 href={twitterUrl}
                 target="_blank"
                 className={`${styles.sns_icon} ${styles.twitter_icon}`}
+                rel="noreferrer"
               >
                 <TwitterIcon width="60%" height="60%" fill="white" />
               </a>
@@ -51,6 +51,7 @@ export const Profile: React.VFC<Props> = ({screenName}) => {
                 href={gitHubUrl}
                 target="_blank"
                 className={`${styles.sns_icon} ${styles.github_icon}`}
+                rel="noreferrer"
               >
                 <GitHubIcon width="60%" height="60%" fill="white" />
               </a>

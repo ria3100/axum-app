@@ -1,8 +1,7 @@
 import {Footer} from '../../commons/Footer';
 import {Header} from './internal/Header';
 import {Loading} from '../Loading';
-import {useRecoilState} from 'recoil';
-import {currentUserState} from '../../../recoil/atoms';
+import {useCurrentUserState} from '../../../recoil/currentUserState';
 import {useRouter} from 'next/router';
 import {SignUpForm} from './internal/SignUpForm';
 
@@ -11,7 +10,7 @@ import styles from './SignUp.module.css';
 type Props = {};
 
 export const SignUp: React.VFC<Props> = () => {
-  const [currentUser] = useRecoilState(currentUserState);
+  const currentUser = useCurrentUserState();
   const router = useRouter();
 
   if (currentUser.isLoading) return <Loading />;
