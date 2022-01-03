@@ -25,6 +25,20 @@ impl UserRepository for DatabaseRepositoryImpl<User> {
         }
     }
 
+    async fn find_by_screen_name(&self, screen_name: &String) -> anyhow::Result<Option<User>> {
+        let pool = self.pool.0.clone();
+        let user_table = query_as::<_, UserTable>("select * from users where screen_name = $1")
+            .bind(screen_name)
+            .fetch_one(&*pool)
+            .await
+            .ok();
+
+        match user_table {
+            Some(st) => Ok(Some(st.try_into()?)),
+            None => Ok(None),
+        }
+    }
+
     async fn insert(&self, source: NewUser) -> anyhow::Result<()> {
         let pool = self.pool.0.clone();
         let user_table: UserTable = source.try_into()?;

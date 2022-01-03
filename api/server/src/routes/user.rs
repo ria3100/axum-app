@@ -16,10 +16,13 @@ use crate::{
 
 #[tracing::instrument(skip(modules))]
 async fn get_user(
-    Path(uid): Path<String>,
+    Path(screen_name): Path<String>,
     Extension(modules): Extension<Arc<Modules>>,
 ) -> Result<impl IntoResponse, StatusCode> {
-    let res = modules.user_use_case().find(uid).await;
+    let res = modules
+        .user_use_case()
+        .find_by_screen_name(screen_name)
+        .await;
     match res {
         Ok(user_view) => user_view
             .map(|user_view| {
